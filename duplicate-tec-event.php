@@ -13,25 +13,34 @@ define( 'DTE_TEXT_DOMAIN', 'duplicate-tec-event' );
 
 define( 'DTE_PLUGIN_DIR', dirname( plugin_basename( __FILE__ ) ) );
 
+define( 'DTE_TRIBE_API' , WP_PLUGIN_DIR . "/the-events-calendar/lib/tribe-event-api.class.php" );
+
 load_plugin_textdomain( DTE_TEXT_DOMAIN, false, trailingslashit( DTE_PLUGIN_DIR ) . 'lang' );
 
-
+$eid = 0;
 // Ensure we are in wp-admin before performing any additional actions
 if( is_admin() ) {
-    
-    // Setup links on events listing to duplicate
-    add_filter( 'post_row_actions', 'dte_row_actions', 10, 2);
-    
-    if( isset( $_GET['action'] ) 
-            && 'duplicate_tribe_event' == $_GET['action'] 
-            && isset( $_GET['post'] )
-            && is_numeric( $_GET['post'] )
-      ) {
-          dte_duplicate_tribe_event( $_GET['post'] );
+    // Ensure the TEC plugin exists
+    if( file_exists( DTE_TRIBE_API ) ) {
+        // Setup links on events listing to duplicate
+        add_filter( 'post_row_actions', 'dte_row_actions', 10, 2);
+
+        if( isset( $_GET['action'] ) 
+                && 'duplicate_tribe_event' == $_GET['action'] 
+                && isset( $_GET['post'] )
+                && is_numeric( $_GET['post'] )
+        ) {
+            //dte_duplicate_tribe_event( $_GET['post'] );
+            $eid = $_GET['post'];
+            add_action( 'init', 'dte_duplicate_tribe_event' );
+        }
+    } else {
+        // Show alert telling user to install TEC
     }
         
         
 }
+
 
 function dte_row_actions( $actions, $post ) {
     // Before altering the available actions, ensure we are on the tribe events page
@@ -42,9 +51,13 @@ function dte_row_actions( $actions, $post ) {
     return $actions;
 }
 
-function dte_duplicate_tribe_event( $event_id ) {
+function dte_duplicate_tribe_event( /*$event_id*/ ) {
+    $event_id = $_GET['post'];
+    
     if ( !class_exists( 'TribeEventsAPI' ) ) 
-                require_once( WP_PLUGIN_DIR . "/the-events-calendar/lib/tribe-event-api.class.php" );
+        if( !file_exists( DTE_TRIBE_API ))
+                return false;
+        require_once( DTE_TRIBE_API );
     
     
     $event = (array)get_post( $event_id );
@@ -52,7 +65,7 @@ function dte_duplicate_tribe_event( $event_id ) {
     $event['post_status'] = 'draft';
     
     $meta = get_post_custom( $event_id );
-    
+   
     // Flatten out the meta array (WTF?)
     $fmeta = array();
     foreach( $meta AS $k => $v ) {
@@ -68,9 +81,23 @@ function dte_duplicate_tribe_event( $event_id ) {
         update_post_meta( $new_event_id, $k, $v );
     }
     
+    // Copy the taxonomies
+    $taxonomies = get_object_taxonomies( 'tribe_events' );
+    
+    foreach( $taxonomies AS $tax ) {
+        $terms = wp_get_object_terms( $event_id, $tax );
+        $term = array();
+        foreach( $terms AS $t ) {
+            $term[] = $t->slug;
+        } 
+       
+        wp_set_object_terms( $new_event_id, $term, $tax );
+    }
+    
     // Send back to the original page
     header("Location: " . admin_url("edit.php?post_type=tribe_events" ) );
 }
+
 
 function d($w) {
     echo '<pre>'; var_dump($w); echo '</pre>';
