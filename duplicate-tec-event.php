@@ -36,9 +36,16 @@ if( is_admin() ) {
         }
     } else {
         // Show alert telling user to install TEC
+        add_action( 'admin_notices', 'dte_admin_notice_install_tec' );
     }
-        
-        
+}
+
+function dte_admin_notice_install_tec() {
+    $url = 'plugin-install.php?tab=search&s=the+events+calendar&plugin-search-input=Search+Plugins';
+    $url = admin_url('plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true&width=640&height=517');
+    echo '<div class="error">
+       <p>You must install <a href="'.$url.'">The Events Calendar</a> plugin before enabling the Duplicate TEC Event plugin!</p>
+    </div>';
 }
 
 
