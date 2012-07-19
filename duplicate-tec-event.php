@@ -54,12 +54,16 @@ function dte_row_actions( $actions, $post ) {
     // Before altering the available actions, ensure we are on the tribe events page
     if( $post->post_type != 'tribe_events' ) return $actions;
 
-    $actions['duplicate_tribe_event'] = '<a href=\''.admin_url('?post_type=tribe_events&action=duplicate_tribe_event&post='.$post->ID).'\'>Duplicate</a>';;
+    $nonce = wp_create_nonce( 'dte_duplicate_event' );
+    $actions['duplicate_tribe_event'] = '<a href=\''.admin_url('?post_type=tribe_events&action=duplicate_tribe_event&post='.$post->ID).'&_nonce=' . $nonce . '\'>Duplicate</a>';;
     
     return $actions;
 }
 
 function dte_duplicate_tribe_event( /*$event_id*/ ) {
+    if( !isset( $_GET['_nonce'] ) || !wp_verify_nonce( $_GET['_nonce'], 'dte_duplicate_event' ) )
+            return;
+    
     $event_id = $_GET['post'];
     
     if ( !class_exists( 'TribeEventsAPI' ) ) 
@@ -118,7 +122,7 @@ function dte_duplicate_tribe_event( /*$event_id*/ ) {
     }
     
     // Send back to the original page
-    header("Location: " . admin_url("edit.php?post_type=tribe_events" ) );
+    wp_redirect(admin_url("edit.php?post_type=tribe_events" ) ); exit;
 }
 
 
