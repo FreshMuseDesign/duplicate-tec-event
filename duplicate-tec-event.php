@@ -3,7 +3,7 @@
  Plugin Name: Duplicate TEC Event
  Plugin URI: 
  Description: Adds the ability to duplicate an event created by Modern Tribe's The Event Calendar plugin. This plugin utilizes the TEC functions to ensure that the new event gets passed through all proper filters
- Version: 1.0
+ Version: 1.1
  Author: Ben Lobaugh
  Author URI: http://ben.lobaugh.net
  Text Domain: duplicate-tec-event
