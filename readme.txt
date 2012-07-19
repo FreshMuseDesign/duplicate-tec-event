@@ -27,5 +27,9 @@ None yet. Toss them on over :)
 
 == Changelog ==
 
+= 1.3 =
+* Added a nonce for security
+* Performed updated requested by Modern Tribe
+
 = 1.0 =
 * First release
