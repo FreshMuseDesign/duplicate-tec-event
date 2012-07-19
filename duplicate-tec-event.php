@@ -32,7 +32,7 @@ if( is_admin() ) {
         ) {
             //dte_duplicate_tribe_event( $_GET['post'] );
             $eid = $_GET['post'];
-            add_action( 'init', 'dte_duplicate_tribe_event' );
+            add_action( 'admin_init', 'dte_duplicate_tribe_event' );
         }
     } else {
         // Show alert telling user to install TEC
@@ -53,7 +53,7 @@ function dte_admin_notice_install_tec() {
 function dte_row_actions( $actions, $post ) {
     // Before altering the available actions, ensure we are on the tribe events page
     if( $post->post_type != 'tribe_events' ) return $actions;
-    
+
     $actions['duplicate_tribe_event'] = '<a href=\''.admin_url('?post_type=tribe_events&action=duplicate_tribe_event&post='.$post->ID).'\'>Duplicate</a>';;
     
     return $actions;
