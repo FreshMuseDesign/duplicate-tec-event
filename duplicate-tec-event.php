@@ -71,14 +71,29 @@ function dte_duplicate_tribe_event( /*$event_id*/ ) {
     $event = (array)get_post( $event_id );
     unset( $event['ID'] ); // Remove ID to prevent an update from happening
     $event['post_status'] = 'draft';
-    
+        
     $meta = get_post_custom( $event_id );
-   
+    
     // Flatten out the meta array (WTF?)
     $fmeta = array();
     foreach( $meta AS $k => $v ) {
         $fmeta[$k] = $v[0];
     }
+    
+    
+    // TEC expects a couple fields to exist without the _ upon creation
+    $event['EventStartDate'] = date( 'Y-m-d', strtotime( $fmeta['_EventStartDate'] ) );
+   // unset( $event['_EventStartDate'] ); // Do not accidentally overwrite the db!
+    $event['EventStartHour'] = date( 'h', strtotime( $fmeta['_EventStartDate'] ) );
+   // unset( $event['_EventStarHour'] ); // Do not accidentally overwrite the db!
+    $event['EventStartMinute'] = date( 'i', strtotime( $fmeta['_EventStartDate'] ) );
+   // unset( $event['_EventStartMinute'] ); // Do not accidentally overwrite the db!
+    $event['EventEndDate'] = date( 'Y-m-d', strtotime( $fmeta['_EventEndDate'] ) );
+   // unset( $event['_EventEndDate'] ); // Do not accidentally overwrite the db!
+    $event['EventEndHour'] = date( 'h', strtotime( $fmeta['_EventEndDate'] ) );
+   // unset( $event['_EventEndDate'] ); // Do not accidentally overwrite the db!
+    $event['EventEndMinute'] = date( 'j', strtotime( $fmeta['_EventEndDate'] ) );
+   
     
     $event = array_merge( $event, $fmeta );
     
