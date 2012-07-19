@@ -108,15 +108,10 @@ function dte_duplicate_tribe_event() {
     
     // TEC expects a couple fields to exist without the _ upon creation
     $event['EventStartDate'] = date( 'Y-m-d', strtotime( $fmeta['_EventStartDate'] ) );
-   // unset( $event['_EventStartDate'] ); // Do not accidentally overwrite the db!
     $event['EventStartHour'] = date( 'h', strtotime( $fmeta['_EventStartDate'] ) );
-   // unset( $event['_EventStarHour'] ); // Do not accidentally overwrite the db!
     $event['EventStartMinute'] = date( 'i', strtotime( $fmeta['_EventStartDate'] ) );
-   // unset( $event['_EventStartMinute'] ); // Do not accidentally overwrite the db!
     $event['EventEndDate'] = date( 'Y-m-d', strtotime( $fmeta['_EventEndDate'] ) );
-   // unset( $event['_EventEndDate'] ); // Do not accidentally overwrite the db!
     $event['EventEndHour'] = date( 'h', strtotime( $fmeta['_EventEndDate'] ) );
-   // unset( $event['_EventEndDate'] ); // Do not accidentally overwrite the db!
     $event['EventEndMinute'] = date( 'j', strtotime( $fmeta['_EventEndDate'] ) );
    
     
