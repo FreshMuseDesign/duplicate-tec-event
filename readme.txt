@@ -11,6 +11,8 @@ Adds the ability to duplicate an event created by Modern Tribe's The Event Calen
 
 Adds the ability to duplicate an event created by Modern Tribe's The Event Calendar plugin. This plugin utilizes the TEC functions to ensure that the new event gets passed through all proper filters
  
+Want to get involved? For this project on Github https://github.com/FreshMuseDesign/duplicate-tec-event
+
 == Installation ==
 
 The easiest way to install this plugin is to go to Add New in the Plugins section of your blog admin and search for "Duplicate TEC Events" On the far right side of the search results, click "Install."
