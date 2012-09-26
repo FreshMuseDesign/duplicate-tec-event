@@ -113,7 +113,10 @@ function dte_duplicate_tribe_event() {
     $event['EventEndDate'] = date( 'Y-m-d', strtotime( $fmeta['_EventEndDate'] ) );
     $event['EventEndHour'] = date( 'h', strtotime( $fmeta['_EventEndDate'] ) );
     $event['EventEndMinute'] = date( 'j', strtotime( $fmeta['_EventEndDate'] ) );
-   
+    
+    // Unset recurrence to prevent potentially thousands of new events being created
+    // This will also unlink an individual recurrence from its parent
+    unset( $fmeta['_EventRecurrence'] );
     
     $event = array_merge( $event, $fmeta );
     
