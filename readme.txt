@@ -1,5 +1,5 @@
 === Duplicate TEC Event ===
-Contributors: FreshMuse, blobaugh
+Contributors: FreshMuse, blobaugh, NikV
 Tags: events, clone, duplicate, modern tribe, the events calendar 
 Requires at least: 3.1
 Tested up to: 3.7
