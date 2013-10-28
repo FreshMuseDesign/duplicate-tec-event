@@ -28,6 +28,9 @@ If the automatic process above fails, follow these simple steps to do a manual i
 None yet. Toss them on over :)
 
 == Changelog ==
+== 1.5 ==
+* Updated to ensure functionality with 3.7
+
 = 1.4 = 
 * Fixed bug causing duplicated recurring events to also alter the original recurring events on edit ( thanks Steve! )
 
