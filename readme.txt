@@ -2,7 +2,7 @@
 Contributors: FreshMuse, blobaugh
 Tags: events, clone, duplicate, modern tribe, the events calendar 
 Requires at least: 3.1
-Tested up to: 3.4.1
+Tested up to: 3.7
 Stable tag: trunk
 
 Adds the ability to duplicate an event created by Modern Tribe's The Event Calendar plugin. 
