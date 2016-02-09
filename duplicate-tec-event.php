@@ -3,7 +3,7 @@
  Plugin Name: Duplicate TEC Event
  Plugin URI: https://github.com/FreshMuseDesign/duplicate-tec-event
  Description: Adds the ability to duplicate an event created by Modern Tribe's The Event Calendar plugin. This plugin utilizes the TEC functions to ensure that the new event gets passed through all proper filters
- Version: 1.5
+ Version: 1.5.1
  Author: Ben Lobaugh
  Author URI: http://ben.lobaugh.net
  Text Domain: duplicate-tec-event
@@ -30,7 +30,7 @@ if( is_admin() ) {
  */
 function dte_init() {
     // Ensure the TEC plugin exists
-    if( class_exists( 'TribeEventsAPI' ) ) {
+    if( class_exists( 'Tribe__Events__API' ) ) {
         // Setup links on events listing to duplicate
         add_filter( 'post_row_actions', 'dte_row_actions', 10, 2);
 
@@ -89,7 +89,7 @@ function dte_duplicate_tribe_event() {
     
     $event_id = $_GET['post'];
     
-    if ( !class_exists( 'TribeEventsAPI' ) ) 
+    if ( !class_exists( 'Tribe__Events__API' ) ) 
         return false;
     
     
@@ -120,7 +120,7 @@ function dte_duplicate_tribe_event() {
     
     $event = array_merge( $event, $fmeta );
     
-    $new_event_id = TribeEventsAPI::createEvent( $event );
+    $new_event_id = Tribe__Events__API::createEvent( $event );
     
     // Merge in any additional meta that may have been missed by createEvent
     foreach( $fmeta AS $k => $v ) {
