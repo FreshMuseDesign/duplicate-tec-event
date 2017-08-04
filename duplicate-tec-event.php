@@ -30,7 +30,7 @@ if( is_admin() ) {
  */
 function dte_init() {
     // Ensure the TEC plugin exists
-    if( class_exists( 'TribeEventsAPI' ) ) {
+    if( class_exists( 'Tribe__Events__API' ) ) {
         // Setup links on events listing to duplicate
         add_filter( 'post_row_actions', 'dte_row_actions', 10, 2);
 
@@ -89,7 +89,7 @@ function dte_duplicate_tribe_event() {
     
     $event_id = $_GET['post'];
     
-    if ( !class_exists( 'TribeEventsAPI' ) ) 
+    if ( !class_exists( 'Tribe__Events__API' ) ) 
         return false;
     
     
@@ -120,7 +120,7 @@ function dte_duplicate_tribe_event() {
     
     $event = array_merge( $event, $fmeta );
     
-    $new_event_id = TribeEventsAPI::createEvent( $event );
+    $new_event_id = Tribe__Events__API::createEvent( $event );
     
     // Merge in any additional meta that may have been missed by createEvent
     foreach( $fmeta AS $k => $v ) {
@@ -141,5 +141,5 @@ function dte_duplicate_tribe_event() {
     }
     
     // Send back to the original page
-    wp_redirect(admin_url("edit.php?post_type=tribe_events" ) ); exit;
+    wp_safe_redirect(admin_url("edit.php?post_type=tribe_events" ) ); exit;
 }
